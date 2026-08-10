@@ -70,7 +70,7 @@ const Hero = () => {
                     <span className="font-['Black_Ops_One'] text-[clamp(1.6rem,5vw,2.8rem)] text-[#EADDCA] leading-none tracking-wide drop-shadow-[0_0_20px_rgba(196,154,42,0.35)]">{pad(v)}</span>
                     <span className="font-['Courier_Prime'] text-[0.55rem] tracking-[0.3em] text-[#d7a832] uppercase mt-1">{l}</span>
                   </div>
-                  {i < 3 && <span className="font-['Black_Ops_One'] text-[clamp(1.4rem,4vw,2.2rem)] text-[#d7a832]/90 animate-pulse mx-0.5 leading-none">:</span>}
+                  {i < 3 && <span className="font-['Black_Ops_One'] text-[clamp(1.4rem,4vw,2.2rem)] text-[#d7a832]/90 animate-pulse mx-0.5 leading-none -translate-y-3 sm:-translate-y-4">:</span>}
                 </div>
               ))}
             </div>

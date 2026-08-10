@@ -198,7 +198,7 @@ export default function PrizePool() {
 
   return (
     <section
-      id="prizepool"
+      id="war-room"
       className={`relative w-full min-h-[560px] sm:min-h-[680px] flex flex-col items-center justify-center overflow-hidden ${
         shakeAll ? "screen-shake" : ""
       }`}

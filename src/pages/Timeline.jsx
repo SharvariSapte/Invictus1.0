@@ -42,19 +42,43 @@ const getFrameOpacity = (currentFrame, startFrame, endFrame) => {
 const Timeline = () => {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
-  const video1Ref = useRef(null);
-  const video2Ref = useRef(null);
   const combinedVideoRef = useRef(null);
 
-  const usingCombinedRef = useRef(true);
+  const [currentFrame, setCurrentFrame] = useState(0);
+  const [imagesReady, setImagesReady] = useState(false);
+
+  // Preloaded frame image objects array for 60FPS zero-lag canvas rendering
+  const framesRef = useRef([]);
   const lastDrawnProgressRef = useRef(-1);
 
-  const [currentFrame, setCurrentFrame] = useState(0);
+  // Preload all 250 frame images on component mount
+  useEffect(() => {
+    let loadedCount = 0;
+    const images = [];
 
-  // Draw video frame to full viewport canvas with aspect-ratio cover fit
-  const drawVideoToCanvas = (videoEl) => {
+    for (let i = 1; i <= MAX_FRAMES; i++) {
+      const img = new Image();
+      const padNum = String(i).padStart(3, "0");
+      img.src = `/timeline_frames/frame_${padNum}.jpg`;
+
+      img.onload = () => {
+        loadedCount++;
+        if (loadedCount >= MAX_FRAMES * 0.3 && !imagesReady) {
+          setImagesReady(true);
+        }
+      };
+      images.push(img);
+    }
+    framesRef.current = images;
+  }, []);
+
+  // Fast canvas draw function supporting both preloaded Image frames & HTML5 Video fallback
+  const drawSourceToCanvas = (sourceEl) => {
     const canvas = canvasRef.current;
-    if (!canvas || !videoEl || videoEl.readyState < 2) return;
+    if (!canvas || !sourceEl) return;
+
+    const isVideo = sourceEl instanceof HTMLVideoElement;
+    if (isVideo && sourceEl.readyState < 2) return;
 
     const ctx = canvas.getContext("2d");
     const dpr = window.devicePixelRatio || 1;
@@ -69,10 +93,14 @@ const Timeline = () => {
     ctx.save();
     ctx.scale(dpr, dpr);
 
-    const vWidth = videoEl.videoWidth || 1920;
-    const vHeight = videoEl.videoHeight || 1080;
+    const srcWidth = isVideo
+      ? sourceEl.videoWidth || 1920
+      : sourceEl.naturalWidth || 1920;
+    const srcHeight = isVideo
+      ? sourceEl.videoHeight || 1080
+      : sourceEl.naturalHeight || 1080;
 
-    const vAspect = vWidth / vHeight;
+    const vAspect = srcWidth / srcHeight;
     const cAspect = canvasWidth / canvasHeight;
 
     let drawWidth, drawHeight, offsetX, offsetY;
@@ -90,7 +118,7 @@ const Timeline = () => {
     }
 
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-    ctx.drawImage(videoEl, offsetX, offsetY, drawWidth, drawHeight);
+    ctx.drawImage(sourceEl, offsetX, offsetY, drawWidth, drawHeight);
     ctx.restore();
   };
 
@@ -98,49 +126,35 @@ const Timeline = () => {
     const clampedProgress = Math.max(0, Math.min(1, progress));
     lastDrawnProgressRef.current = clampedProgress;
 
-    // Direct calculation of frame 0 to 250
-    const calcFrame = Math.min(MAX_FRAMES, Math.floor(clampedProgress * MAX_FRAMES));
-    setCurrentFrame(calcFrame);
+    const frameIdx = Math.min(MAX_FRAMES - 1, Math.floor(clampedProgress * MAX_FRAMES));
+    setCurrentFrame(frameIdx + 1);
 
-    const combinedVid = combinedVideoRef.current;
-    const vid1 = video1Ref.current;
-    const vid2 = video2Ref.current;
-
-    // Direct 1:1 scroll-to-duration mapping for the trimmed 250-frame video
-    if (
-      usingCombinedRef.current &&
-      combinedVid &&
-      combinedVid.duration &&
-      !isNaN(combinedVid.duration)
-    ) {
-      const targetTime = clampedProgress * combinedVid.duration;
-      if (typeof combinedVid.fastSeek === "function") {
-        combinedVid.fastSeek(targetTime);
-      } else {
-        combinedVid.currentTime = targetTime;
-      }
-      drawVideoToCanvas(combinedVid);
+    // 1. Primary Engine: Instant RAM Image Frame Draw (< 0.1ms execution time)
+    const cachedImg = framesRef.current[frameIdx];
+    if (cachedImg && cachedImg.complete && cachedImg.naturalWidth > 0) {
+      drawSourceToCanvas(cachedImg);
       return;
     }
 
-    // Dual video fallback: Part 1 (frames 0..147) -> Part 2 (frames 147..250)
-    if (calcFrame <= 147) {
-      const part1Progress = calcFrame / 147;
-      if (vid1 && vid1.duration && !isNaN(vid1.duration)) {
-        const targetTime = part1Progress * vid1.duration;
-        if (typeof vid1.fastSeek === "function") vid1.fastSeek(targetTime);
-        else vid1.currentTime = targetTime;
-        drawVideoToCanvas(vid1);
+    // 2. Nearest Loaded Frame Fallback
+    for (let offset = 1; offset < 10; offset++) {
+      const prev = framesRef.current[frameIdx - offset];
+      if (prev && prev.complete && prev.naturalWidth > 0) {
+        drawSourceToCanvas(prev);
+        break;
       }
-    } else {
-      const part2FrameIndex = calcFrame - 147;
-      const part2Progress = part2FrameIndex / 147;
-      if (vid2 && vid2.duration && !isNaN(vid2.duration)) {
-        const targetTime = part2Progress * vid2.duration;
-        if (typeof vid2.fastSeek === "function") vid2.fastSeek(targetTime);
-        else vid2.currentTime = targetTime;
-        drawVideoToCanvas(vid2);
+      const next = framesRef.current[frameIdx + offset];
+      if (next && next.complete && next.naturalWidth > 0) {
+        drawSourceToCanvas(next);
+        break;
       }
+    }
+
+    // 3. HTML5 Video Fallback
+    const combinedVid = combinedVideoRef.current;
+    if (combinedVid && combinedVid.duration && !isNaN(combinedVid.duration)) {
+      combinedVid.currentTime = clampedProgress * combinedVid.duration;
+      drawSourceToCanvas(combinedVid);
     }
   };
 
@@ -173,66 +187,18 @@ const Timeline = () => {
       window.removeEventListener("resize", handleScroll);
       if (animId) cancelAnimationFrame(animId);
     };
-  }, []);
-
-  useEffect(() => {
-    const vid1 = video1Ref.current;
-    const vid2 = video2Ref.current;
-    const combinedVid = combinedVideoRef.current;
-
-    const onFrameUpdate = (e) => {
-      drawVideoToCanvas(e.target);
-    };
-
-    [vid1, vid2, combinedVid].forEach((v) => {
-      if (v) {
-        v.addEventListener("seeked", onFrameUpdate);
-        v.addEventListener("timeupdate", onFrameUpdate);
-        v.addEventListener("loadedmetadata", onFrameUpdate);
-        v.addEventListener("canplay", onFrameUpdate);
-      }
-    });
-
-    return () => {
-      [vid1, vid2, combinedVid].forEach((v) => {
-        if (v) {
-          v.removeEventListener("seeked", onFrameUpdate);
-          v.removeEventListener("timeupdate", onFrameUpdate);
-          v.removeEventListener("loadedmetadata", onFrameUpdate);
-          v.removeEventListener("canplay", onFrameUpdate);
-        }
-      });
-    };
-  }, []);
+  }, [imagesReady]);
 
   return (
     <section
       id="timeline"
       ref={containerRef}
-      className="relative w-full h-[350vh] sm:h-[450vh] md:h-[500vh] bg-[#0d0b09]"
+      className="relative w-full h-[350vh] sm:h-[450vh] md:h-[500vh] bg-[#0d0b09] -mt-1"
     >
+      {/* Hidden Fallback Video */}
       <video
         ref={combinedVideoRef}
         src="/timeline_250.mp4"
-        preload="auto"
-        muted
-        playsInline
-        className="hidden"
-        onError={() => {
-          usingCombinedRef.current = false;
-        }}
-      />
-      <video
-        ref={video1Ref}
-        src="/part 1.mp4"
-        preload="auto"
-        muted
-        playsInline
-        className="hidden"
-      />
-      <video
-        ref={video2Ref}
-        src="/part 2.mp4"
         preload="auto"
         muted
         playsInline
@@ -241,7 +207,7 @@ const Timeline = () => {
 
       {/* Sticky Viewport Container */}
       <div className="sticky top-0 left-0 w-full h-screen overflow-hidden bg-[#0d0b09] z-20">
-        {/* Fullscreen Video Canvas */}
+        {/* Fullscreen High-Performance Frame Canvas */}
         <canvas
           ref={canvasRef}
           className="w-full h-full object-cover block pointer-events-none filter brightness-90 contrast-105"
@@ -249,6 +215,9 @@ const Timeline = () => {
 
         {/* Dynamic Dark Vignette Overlay for Card Readability */}
         <div className="absolute inset-0 bg-radial from-transparent via-black/40 to-black/85 pointer-events-none" />
+
+        {/* Top Fade Blend from Hero Section */}
+        <div className="absolute top-0 left-0 w-full h-32 md:h-48 bg-gradient-to-b from-[#0d0b09] via-[#0d0b09]/75 to-transparent pointer-events-none z-25" />
 
         {/* Centered Event Round Cards (Frame-Bound Opacity - Zero Time Lag) */}
         <div className="absolute inset-0 flex items-center justify-center p-3 sm:p-6 z-30 pointer-events-none">

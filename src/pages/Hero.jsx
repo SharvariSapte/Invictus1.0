@@ -76,6 +76,9 @@ const Hero = () => {
             </div>
           </div>
         </div>
+
+        {/* Bottom Fade Transition into Timeline */}
+        <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-[#0d0b09] via-[#0d0b09]/80 to-transparent pointer-events-none z-10" />
       </div>
     </>
   )

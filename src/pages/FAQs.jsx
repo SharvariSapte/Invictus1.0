@@ -39,7 +39,7 @@ export default function InvictusFAQ() {
         <header className="invictus-header">
 
           <h1 className="invictus-title">
-             The Invictus Chronicle
+            The Invictus Chronicle
           </h1>
 
           <p className="invictus-motto">
@@ -154,7 +154,7 @@ export default function InvictusFAQ() {
 
 
           <p>
-           #eXpressToInspire
+            #eXpressToInspire
           </p>
 
         </footer>

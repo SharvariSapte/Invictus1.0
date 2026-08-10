@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import React from 'react'
 import Hero from './pages/Hero'
+import Timeline from './pages/Timeline'
 import Recruitment from './pages/Recruitment'
 import Navbar from '../components/Navbar'
 import Contact from './pages/Contact'
@@ -11,6 +12,7 @@ const App = () => {
     <div className='w-screen min-h-screen overflow-x-hidden bg-[#0d0b09]'>
       <Navbar/>
       <Hero/>
+      <Timeline/>
       <Recruitment/>
       <Contact/>
       <InvictusFAQ/>

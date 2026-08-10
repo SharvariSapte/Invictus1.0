@@ -35,7 +35,7 @@ const Hero = () => {
     <>
       <div id="briefing" className="w-screen min-h-screen relative flex justify-center items-center"
         style={{
-          backgroundImage: isMobile ? "url('Mobile_hero.png')" : "url('desktop_heroo.png')",
+          backgroundImage: isMobile ? "url('/Mobile_hero.png')" : "url('/desktop_heroo.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
@@ -44,7 +44,7 @@ const Hero = () => {
 
           <div className='flex flex-col gap-4 items-center'>
 
-            <img src="Heading.png" alt="Heading" />
+            <img src="/Heading.png" alt="Heading" />
 
             <div className='text-[#e8dfce] flex w-[90%] justify-between items-baseline font-mono'>
               <span>STRATEGY</span>

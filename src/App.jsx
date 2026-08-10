@@ -1,5 +1,6 @@
 import React from 'react'
 import Hero from './pages/Hero'
+import PrizePool from './pages/prizepool'
 import Recruitment from './pages/Recruitment'
 import Navbar from '../components/Navbar'
 import Contact from './pages/Contact'
@@ -9,6 +10,7 @@ const App = () => {
     <div className='w-screen min-h-screen overflow-x-hidden bg-[#0d0b09]'>
       <Navbar/>
       <Hero/>
+      <PrizePool/>
       <Recruitment/>
       <Contact/>
     </div>

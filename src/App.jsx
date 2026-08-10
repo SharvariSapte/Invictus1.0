@@ -1,3 +1,4 @@
+import { Routes, Route } from "react-router-dom";
 import React from 'react'
 import Hero from './pages/Hero'
 import Recruitment from './pages/Recruitment'

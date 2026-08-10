@@ -6,7 +6,7 @@ const Contact = () => {
       id="contact-hq" 
       className="relative w-full min-h-screen flex justify-center items-center py-16 px-4 md:px-8 font-mono"
       style={{
-        backgroundImage: "url('desktop_heroo.png')", //[cite: 1]
+        backgroundImage: "url('/desktop_heroo.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed"

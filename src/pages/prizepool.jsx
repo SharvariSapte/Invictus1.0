@@ -203,7 +203,7 @@ export default function PrizePool() {
         shakeAll ? "screen-shake" : ""
       }`}
       style={{
-        backgroundImage: "url('desktop_heroo.png')",
+        backgroundImage: "url('/desktop_heroo.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed",

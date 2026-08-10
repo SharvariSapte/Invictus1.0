@@ -6,7 +6,7 @@ const Recruitment = () => {
       id="recruitment" 
       className="relative w-full min-h-screen flex justify-center items-center py-20 px-4 md:px-8 font-mono overflow-hidden"
       style={{
-        backgroundImage: "url('desktop_heroo.png')",
+        backgroundImage: "url('/desktop_heroo.png')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundAttachment: "fixed"

@@ -19,17 +19,6 @@ const Navbar = () => {
     { name: "CONTACT HQ", id: "contact-hq" },
     { name: "RECRUITMENT", id: "recruitment" },
   ];
-const scrollToSection = (id) => {
-    const section = document.getElementById(id);
-
-    if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-      });
-    }
-
-    setMenuOpen(false);
-  };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-black/80 to-black/0">

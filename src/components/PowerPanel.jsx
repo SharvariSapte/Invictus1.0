@@ -1,6 +1,8 @@
 export default function PowerPanel({ side, data, selected, disabled, onJoin }) {
   const allied = side === "allied";
 
+
+
   return (
     <article
       className={`power-panel ${allied ? "allied-panel" : "axis-panel"} ${selected ? "panel-selected" : ""}`}

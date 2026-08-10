@@ -1,54 +1,36 @@
-import React, { useState } from 'react'
-import Hero from './pages/Hero'
-import PrizePool from './pages/prizepool'
-import Recruitment from './pages/Recruitment'
-import Navbar from '../components/Navbar'
-import Contact from './pages/Contact'
-import Landing from './pages/Landing'
+import React from 'react';
+import { Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import DummyPage from "./pages/DummyPage";
+import Hero from './pages/Hero';
+import PrizePool from './pages/prizepool';
+import Recruitment from './pages/Recruitment';
+import Navbar from '../components/Navbar';
+import Contact from './pages/Contact';
 
 const App = () => {
-  const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : new URLSearchParams();
-  const defaultShow = params.has('landing') ? params.get('landing') === '1' : true;
-  const [showLanding, setShowLanding] = useState(defaultShow);
-
-  const handleLandingJoin = (side) => {
-    setShowLanding(false);
-    try {
-      window.dispatchEvent(new CustomEvent('landingJoin', { detail: { side } }));
-    } catch (e) {
-      // ignore
-    }
-
-    // Keep the main site as the normal scrollable page after the
-    // landing animation finishes.
-    requestAnimationFrame(() => {
-      const el = document.getElementById('briefing');
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  };
-
-  const handleLogoClick = () => {
-    // The logo always brings the cinematic landing screen back.
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    setShowLanding(true);
-  };
+  const MainEventPage = () => (
+    <div className='w-screen min-h-screen overflow-x-hidden bg-[#0d0b09]'>
+      <Navbar />
+      <Hero />
+      <PrizePool />
+      <Recruitment />
+      <Contact />
+    </div>
+  );
 
   return (
-    <div className='w-screen min-h-screen overflow-x-hidden bg-[#0d0b09]'>
-      <Navbar onLogoClick={handleLogoClick}/>
-
-      <Hero/>
-      <PrizePool/>
-      <Recruitment/>
-      <Contact/>
-
-      {showLanding && (
-        <div style={{position: 'fixed', inset: 0, zIndex: 9999}}>
-          <Landing onJoinComplete={handleLandingJoin} />
-        </div>
-      )}
-    </div>
-  )
+    <Routes>
+      {/* Your Theatre of War landing page */}
+      <Route path="/" element={<Home />} />
+      
+      {/* Navigates to the team's main website after the animation */}
+      <Route path="/selected/:side" element={<MainEventPage />} />
+      
+      {/* Optional: Keep your DummyPage available just in case */}
+      <Route path="/dummy" element={<DummyPage />} />
+    </Routes>
+  );
 }
 
-export default App
+export default App;

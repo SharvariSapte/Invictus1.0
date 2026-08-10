@@ -1,6 +1,7 @@
 export default function BattleFX({ battle, flash }) {
   if (!battle) return null;
 
+  // battle = the side that launched. The impact is always the opposite side.
   const target = battle === "allied" ? "axis" : "allied";
 
   return (

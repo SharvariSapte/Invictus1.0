@@ -45,7 +45,7 @@ const Contact = () => {
           <div className="w-full md:w-1/3 flex flex-col items-center">
             <div className="bg-[#4B5320]/20 border border-[#C49A2A]/30 p-4 w-full flex flex-col items-center shadow-inner max-w-[320px]">
               <img 
-                src="../../public/image.png" 
+                src="/image.png" 
                 alt="Field Radio" 
                 className="w-full h-auto filter sepia-[.6] brightness-75 contrast-125 mix-blend-luminosity border border-black/50"
               />

@@ -11,11 +11,11 @@ import Contact from './pages/Contact';
 const App = () => {
   const MainEventPage = () => (
     <div className='w-screen min-h-screen overflow-x-hidden bg-[#0d0b09]'>
-      <Navbar/>
-      <Hero/>
-      <PrizePool/>
-      <Recruitment/>
-      <Contact/>
+      <Navbar />
+      <Hero />
+      <PrizePool />
+      <Recruitment />
+      <Contact />
     </div>
   );
 

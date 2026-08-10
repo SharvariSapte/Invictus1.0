@@ -3,11 +3,21 @@ import React, { useState } from "react";
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const scrollToSection = (id) => {
+    setMenuOpen(false);
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const navItems = [
     { name: "BRIEFING", id: "briefing" },
     { name: "TIMELINE", id: "timeline" },
     { name: "WAR ROOM", id: "war-room" },
     { name: "COMMUNICATIONS", id: "communications" },
+    { name: "CONTACT HQ", id: "contact-hq" },
+    { name: "RECRUITMENT", id: "recruitment" },
   ];
 const scrollToSection = (id) => {
     const section = document.getElementById(id);

@@ -3,6 +3,7 @@ import Hero from './pages/Hero'
 import Recruitment from './pages/Recruitment'
 import Navbar from '../components/Navbar'
 import Contact from './pages/Contact'
+import InvictusFAQ from './pages/FAQs'
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
       <Hero/>
       <Recruitment/>
       <Contact/>
+      <InvictusFAQ/>
     </div>
   )
 }

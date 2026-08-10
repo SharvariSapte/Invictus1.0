@@ -7,8 +7,19 @@ const Navbar = () => {
     { name: "BRIEFING", id: "briefing" },
     { name: "TIMELINE", id: "timeline" },
     { name: "WAR ROOM", id: "war-room" },
-    { name: "CLASSIFIED", id: "classified" },
+    { name: "COMMUNICATIONS", id: "communications" },
   ];
+const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+
+    setMenuOpen(false);
+  };
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-black/80 to-black/0">

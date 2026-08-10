@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Navbar = () => {
+const Navbar = ({ onLogoClick }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const scrollToSection = (id) => {
@@ -15,7 +15,6 @@ const Navbar = () => {
     { name: "BRIEFING", id: "briefing" },
     { name: "TIMELINE", id: "timeline" },
     { name: "WAR ROOM", id: "war-room" },
-    { name: "COMMUNICATIONS", id: "communications" },
     { name: "RECRUITMENT", id: "recruitment" },
     { name: "CONTACT HQ", id: "contact-hq" },
   ];
@@ -29,7 +28,10 @@ const Navbar = () => {
         {/* LEFT - Logo */}
         <div
           className="flex items-center gap-3 cursor-pointer"
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          onClick={() => {
+            if (onLogoClick) onLogoClick();
+            else window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
         >
 
           {/* Military emblem */}

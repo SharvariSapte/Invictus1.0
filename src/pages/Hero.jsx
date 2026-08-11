@@ -107,7 +107,7 @@ const loaded = imageLoaded && minTimePassed;
             <div>but by strategy and leadership</div>
           </div>
           <div className='bg-black/70 flex flex-col items-center mt-8'>
-            <div className="text-[#e7cfa3] font-mono md:text-lg mt-3">OPERATION BEGINS IN</div>
+            <div className="text-[#e7cfa3] md:text-lg mt-3 font-['Black_Ops_One']">OPERATION BEGINS IN</div>
             <div className="flex items-center justify-center gap-1 sm:gap-2 my-4 w-full flex-nowrap scale-80">
               {[{ v: countdown.d, l: 'DAYS' }, { v: countdown.h, l: 'HRS' }, { v: countdown.m, l: 'MIN' }, { v: countdown.s, l: 'SEC' }].map(({ v, l }, i) => (
                 <div key={l} className="flex items-center gap-2">

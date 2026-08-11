@@ -118,7 +118,7 @@ const Hero = () => {
         )}
 
         {loaded && (
-          <div className='absolute top-[20dvh] md:top-[17vh] md:left-[10vw] lg:left-[17vw] w-[clamp(300px,40%,400px)]'>
+          <div className='scale-92 absolute top-[20dvh] md:top-[17vh] md:left-[10vw] lg:left-[17vw] w-[clamp(300px,40%,400px)]'>
             <div className='flex flex-col gap-4 items-center'>
               <img src="/Heading.png" alt="Heading" />
               <div className='text-[#e8dfce] flex w-[90%] justify-between items-baseline font-mono'>
@@ -136,7 +136,7 @@ const Hero = () => {
               <div>but by strategy and leadership</div>
             </div>
 
-            <div className='bg-black/70 flex flex-col items-center mt-8'>
+            <div className='bg-black/70 flex flex-col items-center mt-6'>
               <div className="text-[#e7cfa3] md:text-lg mt-3 font-['Black_Ops_One']">OPERATION BEGINS IN</div>
               <div className="flex items-center justify-center gap-1 sm:gap-2 my-4 w-full flex-nowrap scale-80">
                 {[{ v: countdown.d, l: 'DAYS' }, { v: countdown.h, l: 'HRS' }, { v: countdown.m, l: 'MIN' }, { v: countdown.s, l: 'SEC' }].map(({ v, l }, i) => (

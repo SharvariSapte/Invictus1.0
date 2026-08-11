@@ -32,15 +32,29 @@ const Hero = () => {
     };
   }, []);
 
-   const [loaded, setLoaded] = useState(false);
+   const [imageLoaded, setImageLoaded] = useState(false);
+   const [minTimePassed, setMinTimePassed] = useState(false);
+
+useEffect(() => {
+  const timer = setTimeout(() => {
+    setMinTimePassed(true);
+  }, 3000);
+
+  return () => clearTimeout(timer);
+}, []);
   useEffect(() => {
     const img = new Image();
-    img.src = "/Mobile_hero.png";
-
+     img.src = window.innerWidth < 768
+    ? "/Mobile_hero.png"
+    : "/desktop_heroo.png";
     img.onload = () => {
-      setLoaded(true);
+      setImageLoaded(true);
     };
   }, []);
+
+const loaded = imageLoaded && minTimePassed;
+
+
   return (
     <>
       <div id="briefing" className="w-screen min-h-screen relative flex justify-center items-center"

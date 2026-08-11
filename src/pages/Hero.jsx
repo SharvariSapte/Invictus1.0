@@ -99,7 +99,7 @@ const Hero = () => {
               />
             </div>
 
-            <div className="morse-loader flex flex-wrap justify-center items-center text-center">
+            <div className="morse-loader flex justify-center items-center text-center text-xs sm:text-base md:text-lg whitespace-nowrap overflow-hidden max-w-full px-2">
               <span>..</span>
               <span>-.</span>
               <span>...</span>

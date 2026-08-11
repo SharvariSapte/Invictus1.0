@@ -153,7 +153,7 @@ const Hero = () => {
           </div>
         )}
 
-        <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-[#0d0b09] via-[#0d0b09]/80 to-transparent pointer-events-none z-10" />
+        <div className="absolute bottom-0 left-0 w-full h-10 md:h-10 bg-gradient-to-t from-[#0d0b09] via-[#0d0b09]/80 to-transparent pointer-events-none z-10" />
       </div>
     </>
   )

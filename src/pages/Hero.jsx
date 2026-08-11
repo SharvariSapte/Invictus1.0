@@ -52,7 +52,7 @@ const Hero = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setMinTimePassed(true);
-    }, 0);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -150,15 +150,15 @@ const Hero = () => {
                 ))}
               </div>
             </div>
-                <div>
+                <div className='w-full flex justify-center'>
           <a 
               href="https://docs.google.com/forms/d/e/1FAIpQLSfDWzX2pvKTyXPa3YoZtdUhdbMJvKH1NNbghtDqtY-YlycBvw/viewform" 
               target="_blank" 
               rel="noopener noreferrer"
               className=" scale-70 group relative inline-flex items-center justify-center 
-              w-full max-w-[300px] sm:max-w-[380px] py-6 px-8 
-              text-center bg-gradient-to-r from-[#8b6e22] via-[#d7a832] to-[#8b6e22] hover:from-[#d7a832]
-               hover:via-[#e7cfa3] hover:to-[#d7a832] text-[#15120f] font-['Black_Ops_One'] text-lg md:text-xl tracking-[0.2em] uppercase font-bold border-2 
+              w-full max-w-[280px] sm:max-w-[340px] py-6 px-8 
+              text-center bg-gradient-to-r from-[#7b611f] via-[#d7a832] to-[#7b611f] hover:from-[#b88e23]
+               hover:via-[#dcc293] hover:to-[#b88e23] text-[#15120f] font-['Black_Ops_One'] text-lg md:text-xl tracking-[0.2em] uppercase font-bold border-2 
                border-[#e7cfa3] shadow-[0_0_25px_rgba(215,168,50,0.5)] hover:shadow-[0_0_40px_rgba(231,207,163,0.85)] transition-all duration-300 transform active:scale-[0.98] 
                focus:outline-none focus:ring-4 focus:ring-[#d7a832]/60 cursor-pointer rounded-sm"
               aria-label="Register Now for Invictus 1.0 Recruitment"

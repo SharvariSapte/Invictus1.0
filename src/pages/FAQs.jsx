@@ -32,7 +32,7 @@ export default function InvictusFAQ() {
   };
 
   return (
-    <div className="invictus-page">
+    <div className="invictus-page" id="faq">
       <div className="paper-overlay">
 
         {/* ================= HEADER ================= */}

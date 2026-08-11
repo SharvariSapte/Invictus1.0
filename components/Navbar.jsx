@@ -14,16 +14,17 @@ const Navbar = ({ onLogoClick }) => {
   const navItems = [
     { name: "BRIEFING", id: "briefing" },
     { name: "TIMELINE", id: "timeline" },
-    { name: "WAR ROOM", id: "war-room" },
+    { name: "PRIZE POOL", id: "war-room" },
     { name: "RECRUITMENT", id: "recruitment" },
     { name: "CONTACT HQ", id: "contact-hq" },
+    { name: "FAQ", id: "faq" },
   ];
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-black/80 to-black/0">
       <div className="h-[70px] px-6 md:px-10 flex items-center justify-between">
 
-        
+
         <div
           className="flex items-center gap-3 cursor-pointer"
           onClick={() => {
@@ -49,7 +50,7 @@ const Navbar = ({ onLogoClick }) => {
         </div>
 
 
-       
+
         <div className="hidden md:flex items-center gap-8">
 
           {navItems.map((item) => (

@@ -11,7 +11,7 @@ import Home from './pages/Home'
 
 const App = () => {
   const MainEventPage = () => (
-    <div className='w-full min-h-screen overflow-x-hidden bg-[#0d0b09]'>
+    <div className='w-full min-h-screen  bg-[#0d0b09]'>
       <Navbar />
       <Hero />
       <Timeline />

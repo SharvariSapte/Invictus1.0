@@ -40,7 +40,7 @@ const Hero = () => {
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}>
-        <div className='absolute top-[28vh] md:top-32 md:left-[10vw] lg:left-[17vw] w-[clamp(300px,40%,400px)]'>
+        <div className='absolute top-[28dvh] md:top-32 md:left-[10vw] lg:left-[17vw] w-[clamp(300px,40%,400px)]'>
 
           <div className='flex flex-col gap-4 items-center'>
 
@@ -77,7 +77,6 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Bottom Fade Transition into Timeline */}
         <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-[#0d0b09] via-[#0d0b09]/80 to-transparent pointer-events-none z-10" />
       </div>
     </>

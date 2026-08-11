@@ -21,11 +21,9 @@ const Navbar = ({ onLogoClick }) => {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-gradient-to-r from-black/80 to-black/0">
-
-      {/* Main navbar */}
       <div className="h-[70px] px-6 md:px-10 flex items-center justify-between">
 
-        {/* LEFT - Logo */}
+        
         <div
           className="flex items-center gap-3 cursor-pointer"
           onClick={() => {
@@ -34,7 +32,6 @@ const Navbar = ({ onLogoClick }) => {
           }}
         >
 
-          {/* Military emblem */}
           <div className="text-[#d8c9ad] text-2xl">
             ★
           </div>
@@ -52,7 +49,7 @@ const Navbar = ({ onLogoClick }) => {
         </div>
 
 
-        {/* CENTER - Desktop Navigation */}
+       
         <div className="hidden md:flex items-center gap-8">
 
           {navItems.map((item) => (
@@ -88,7 +85,6 @@ const Navbar = ({ onLogoClick }) => {
         </div>
 
 
-        {/* RIGHT - Status */}
         <div className="hidden md:flex items-center gap-3">
 
           {/* Status dot */}
@@ -105,7 +101,6 @@ const Navbar = ({ onLogoClick }) => {
         </div>
 
 
-        {/* Mobile menu button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="md:hidden text-[#d8c9ad] text-2xl"
@@ -116,11 +111,8 @@ const Navbar = ({ onLogoClick }) => {
       </div>
 
 
-      {/* Bottom line */}
       <div className="mx-6 md:mx-10 border-b border-[#d0c1a8]/20"></div>
 
-
-      {/* MOBILE MENU */}
       {menuOpen && (
         <div
           className="

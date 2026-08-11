@@ -118,7 +118,7 @@ const Hero = () => {
         )}
 
         {loaded && (
-          <div className='absolute top-[28dvh] md:top-[17vh] md:left-[10vw] lg:left-[17vw] w-[clamp(300px,40%,400px)]'>
+          <div className='absolute top-[22dvh] md:top-[17vh] md:left-[10vw] lg:left-[17vw] w-[clamp(300px,40%,400px)]'>
             <div className='flex flex-col gap-4 items-center'>
               <img src="/Heading.png" alt="Heading" />
               <div className='text-[#e8dfce] flex w-[90%] justify-between items-baseline font-mono'>

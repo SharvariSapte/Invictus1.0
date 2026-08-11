@@ -1,63 +1,39 @@
-let audioContext;
+let battleAudio = new Audio("/missile-boom.mp3");
+battleAudio.preload = "auto";
+battleAudio.load();
 
-function getContext() {
-  audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
-  return audioContext;
+export function preloadBattleSound() {
+  // The audio begins loading when the module is imported, so the first click
+  // is ready as soon as the page mounts.
+  if (!battleAudio) {
+    battleAudio = new Audio("/missile-boom.mp3");
+    battleAudio.preload = "auto";
+    battleAudio.load();
+  }
 }
 
 export function playLaunchSound() {
-  const ctx = getContext();
-  const now = ctx.currentTime;
+  if (!battleAudio) {
+    preloadBattleSound();
+  }
 
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  const filter = ctx.createBiquadFilter();
+  battleAudio.pause();
+  battleAudio.currentTime = 0;
+  battleAudio.volume = 1.0;
 
-  osc.type = "sawtooth";
-  osc.frequency.setValueAtTime(120, now);
-  osc.frequency.exponentialRampToValueAtTime(720, now + 0.8);
-
-  filter.type = "lowpass";
-  filter.frequency.setValueAtTime(700, now);
-  filter.frequency.exponentialRampToValueAtTime(2600, now + 0.8);
-
-  gain.gain.setValueAtTime(0.0001, now);
-  gain.gain.exponentialRampToValueAtTime(0.24, now + 0.06);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
-
-  osc.connect(filter);
-  filter.connect(gain);
-  gain.connect(ctx.destination);
-  osc.start(now);
-  osc.stop(now + 0.95);
+  battleAudio.play().catch((error) => {
+    console.warn("Battle sound could not play:", error);
+  });
 }
 
 export function playExplosionSound() {
-  const ctx = getContext();
-  const now = ctx.currentTime;
+  // Don't play another sound.
+  // The explosion is already included in missile-boom.mp3.
+}
 
-  const buffer = ctx.createBuffer(1, ctx.sampleRate * 0.9, ctx.sampleRate);
-  const data = buffer.getChannelData(0);
-
-  for (let i = 0; i < data.length; i++) {
-    const decay = Math.pow(1 - i / data.length, 2.4);
-    data[i] = (Math.random() * 2 - 1) * decay;
+export function stopBattleSound() {
+  if (battleAudio) {
+    battleAudio.pause();
+    battleAudio.currentTime = 0;
   }
-
-  const source = ctx.createBufferSource();
-  const filter = ctx.createBiquadFilter();
-  const gain = ctx.createGain();
-
-  source.buffer = buffer;
-  filter.type = "lowpass";
-  filter.frequency.setValueAtTime(900, now);
-  filter.frequency.exponentialRampToValueAtTime(120, now + 0.8);
-
-  gain.gain.setValueAtTime(0.65, now);
-  gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.9);
-
-  source.connect(filter);
-  filter.connect(gain);
-  gain.connect(ctx.destination);
-  source.start(now);
 }

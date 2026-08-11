@@ -3,7 +3,11 @@ import { useNavigate } from "react-router-dom";
 import PowerPanel from "../components/PowerPanel";
 import TrenchDivider from "../components/TrenchDivider";
 import BattleFX from "../components/BattleFX";
-import { playLaunchSound, playExplosionSound } from "../components/sound";
+import {
+  preloadBattleSound,
+  playLaunchSound,
+  playExplosionSound,
+} from "../components/sound";
 
 const SIDES = {
   allied: {
@@ -21,6 +25,10 @@ export default function Home() {
   const [battle, setBattle] = useState(null);
   const [flash, setFlash] = useState(false);
   const [disabled, setDisabled] = useState(false);
+
+  useEffect(() => {
+    preloadBattleSound();
+  }, []);
 
   useEffect(() => {
     if (!battle) return;

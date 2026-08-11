@@ -2,18 +2,21 @@ import { useEffect, useState } from "react";
 import PowerPanel from "../components/PowerPanel";
 import TrenchDivider from "../components/TrenchDivider";
 import BattleFX from "../components/BattleFX";
-import { playLaunchSound, playExplosionSound } from "../components/sound";
+import {
+  preloadBattleSound,
+  playLaunchSound,
+} from "../components/sound";
 import landingCss from "../landing.css?raw";
 
 const SIDES = {
   allied: {
     title: "ALLIED FRONT",
-    subtitle: "UNITED WE STAND. VICTORY TOGETHER."
+    subtitle: "UNITED WE STAND. VICTORY TOGETHER.",
   },
   axis: {
     title: "AXIS POWERS",
-    subtitle: "STRENGTH. ORDER. VICTORY."
-  }
+    subtitle: "STRENGTH. ORDER. VICTORY.",
+  },
 };
 
 export default function Landing({ onJoinComplete }) {
@@ -21,17 +24,22 @@ export default function Landing({ onJoinComplete }) {
   const [flash, setFlash] = useState(false);
   const [disabled, setDisabled] = useState(false);
 
+  // Preload battle audio as soon as landing page opens
+  useEffect(() => {
+    preloadBattleSound();
+  }, []);
+
+  // Battle animation timing
   useEffect(() => {
     if (!battle) return;
 
-    // Keep the sound aligned with the visual impact anchor (1.02s).
-    // The fireball itself starts at ~1.03s, so the blast sound lands
-    // immediately as the missile reaches the target.
+    // Visual explosion / flash
+    // Keep this synchronized with the missile animation
     const explosionTimer = setTimeout(() => {
-      playExplosionSound();
       setFlash(true);
     }, 1020);
 
+    // Navigate to the main site after animation
     const completeTimer = setTimeout(() => {
       onJoinComplete(battle);
     }, 1900);
@@ -42,29 +50,39 @@ export default function Landing({ onJoinComplete }) {
     };
   }, [battle, onJoinComplete]);
 
-  // Inject landing CSS into the document only while this component is mounted.
+  // Inject landing CSS only while this component is mounted
   useEffect(() => {
-    const style = document.createElement('style');
-    style.id = 'landing-styles';
+    const style = document.createElement("style");
+
+    style.id = "landing-styles";
     style.textContent = landingCss;
+
     document.head.appendChild(style);
+
     return () => {
-      const el = document.getElementById('landing-styles');
+      const el = document.getElementById("landing-styles");
       if (el) el.remove();
     };
   }, []);
 
   const handleJoin = (side) => {
     if (disabled) return;
+
     setDisabled(true);
     setBattle(side);
     setFlash(false);
+
+    // Start the trimmed missile + explosion audio
+    // at exactly the same time as the missile animation
     playLaunchSound();
   };
 
   return (
     <main className="war-page">
-      <section className="battlefield" aria-label="Choose your power">
+      <section
+        className="battlefield"
+        aria-label="Choose your power"
+      >
         <PowerPanel
           side="allied"
           data={SIDES.allied}
@@ -83,7 +101,10 @@ export default function Landing({ onJoinComplete }) {
           onJoin={handleJoin}
         />
 
-        <BattleFX battle={battle} flash={flash} />
+        <BattleFX
+          battle={battle}
+          flash={flash}
+        />
       </section>
     </main>
   );

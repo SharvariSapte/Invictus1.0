@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import React from 'react'
 import Hero from './pages/Hero'
 import Timeline from './pages/Timeline'
@@ -10,9 +10,11 @@ import InvictusFAQ from './pages/FAQs'
 import Home from './pages/Home'
 
 const App = () => {
+  const navigate = useNavigate();
+
   const MainEventPage = () => (
     <div className='w-full min-h-screen  bg-[#0d0b09]'>
-      <Navbar />
+      <Navbar onLogoClick={() => navigate('/')} />
       <Hero />
       <Timeline />
       <PrizePool />

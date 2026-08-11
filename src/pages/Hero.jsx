@@ -81,7 +81,7 @@ const Hero = () => {
     <>
       <div
         id="briefing"
-        className="w-screen min-h-screen relative flex justify-center items-center overflow-hidden"
+        className="w-full min-h-screen relative flex justify-center items-center overflow-hidden"
         style={{
           backgroundImage: loaded ? (isMobile ? "url('/Mobile_hero.png')" : "url('/desktop_heroo.png')") : "",
           backgroundSize: "cover",

@@ -11,14 +11,14 @@ import Home from './pages/Home'
 
 const App = () => {
   const MainEventPage = () => (
-    <div className='w-screen min-h-screen overflow-x-clip bg-[#0d0b09]'>
-      <Navbar/>
-      <Hero/>
-      <Timeline/>
-      <PrizePool/>
-      <Recruitment/>
-      <Contact/>
-      <InvictusFAQ/>
+    <div className='w-full min-h-screen overflow-x-hidden bg-[#0d0b09]'>
+      <Navbar />
+      <Hero />
+      <Timeline />
+      <PrizePool />
+      <Recruitment />
+      <Contact />
+      <InvictusFAQ />
     </div>
   );
 
@@ -26,10 +26,10 @@ const App = () => {
     <Routes>
       {/* Your Theatre of War landing page */}
       <Route path="/" element={<Home />} />
-      
+
       {/* Navigates to the team's main website after the animation */}
       <Route path="/selected/:side" element={<MainEventPage />} />
-      
+
     </Routes>
   );
 }

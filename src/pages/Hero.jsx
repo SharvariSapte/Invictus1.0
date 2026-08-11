@@ -37,18 +37,6 @@ const Hero = () => {
   const [minTimePassed, setMinTimePassed] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  // Prevent background scrolling while loading
-  useEffect(() => {
-    if (!loaded) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, []);
-
   // Simulated progress loader matching the timer window
   useEffect(() => {
     const interval = setInterval(() => {
@@ -102,7 +90,7 @@ const Hero = () => {
         }}
       >
         {!loaded && (
-          <div className="absolute inset-0 z-50 h-full flex flex-col items-center justify-center bg-[#0d0c0a]">
+          <div className="absolute inset-0 z-50 h-full flex flex-col items-center justify-center bg-[#0d0c0a] px-4 text-center">
             {/* Thin Progress Bar at the top */}
             <div className="absolute top-0 left-0 w-full h-[3px] bg-[#1a1815]">
               <div
@@ -111,7 +99,7 @@ const Hero = () => {
               />
             </div>
 
-            <div className="morse-loader">
+            <div className="morse-loader flex flex-wrap justify-center items-center text-center">
               <span>..</span>
               <span>-.</span>
               <span>...</span>

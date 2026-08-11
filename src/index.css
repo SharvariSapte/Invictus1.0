@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 body{
-    overflow-x: clip;
+    overflow-x:hidden;
 }
 .morse-loader {
   display: flex;

@@ -95,9 +95,6 @@ const Navbar = ({ onLogoClick }) => {
             <span className="relative inline-flex rounded-full h-2 w-2 bg-[#a64f2d]"></span>
           </span>
 
-          <span className="text-[#a99b85] text-[10px] tracking-[0.2em]">
-            OPERATION ACTIVE
-          </span>
 
         </div>
 

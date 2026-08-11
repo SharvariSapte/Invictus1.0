@@ -3,7 +3,34 @@
 body{
     overflow-x: clip;
 }
+.morse-loader {
+  display: flex;
+  gap: 14px;
 
+  color: #d8c9ad;
+
+  font-family: monospace;
+  font-size: 22px;
+  letter-spacing: 4px;
+
+  text-shadow: 0 0 10px rgba(216, 201, 173, 0.6);
+
+  animation: transmission 1.5s infinite;
+}
+
+@keyframes transmission {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}
 :root {
   font-family: Georgia, "Times New Roman", serif;
   color: #eee1c4;

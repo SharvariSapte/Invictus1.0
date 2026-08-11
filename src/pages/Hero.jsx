@@ -31,16 +31,47 @@ const Hero = () => {
       window.removeEventListener("resize", resizeBg);
     };
   }, []);
+
+   const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/Mobile_hero.png";
+
+    img.onload = () => {
+      setLoaded(true);
+    };
+  }, []);
   return (
     <>
       <div id="briefing" className="w-screen min-h-screen relative flex justify-center items-center"
         style={{
-          backgroundImage: isMobile ? "url('/Mobile_hero.png')" : "url('/desktop_heroo.png')",
+          backgroundImage: loaded ? (isMobile ? "url('/Mobile_hero.png')" : "url('/desktop_heroo.png')") : "",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}>
-        <div className='absolute top-[28dvh] md:top-32 md:left-[10vw] lg:left-[17vw] w-[clamp(300px,40%,400px)]'>
+            {!loaded && (
+  <div className="h-full flex flex-col items-center justify-center bg-[#0d0c0a]">
+
+    <div className="morse-loader">
+      <span>..</span>
+      <span>-.</span>
+      <span>...</span>
+      <span>-</span>
+      <span>..-.</span>
+      <span>-.-.</span>
+      <span>-</span>
+      <span>..-</span>
+      <span>...</span>
+    </div>
+
+    <p className="mt-6 text-[#cbbda7] text-xs tracking-[0.35em]">
+      INCOMING TRANSMISSION
+    </p>
+
+  </div>
+)}
+        {loaded && (<div className='absolute top-[28dvh] md:top-32 md:left-[10vw] lg:left-[17vw] w-[clamp(300px,40%,400px)]'>
 
           <div className='flex flex-col gap-4 items-center'>
 
@@ -75,7 +106,7 @@ const Hero = () => {
               ))}
             </div>
           </div>
-        </div>
+        </div>)}
 
         <div className="absolute bottom-0 left-0 w-full h-32 md:h-48 bg-gradient-to-t from-[#0d0b09] via-[#0d0b09]/80 to-transparent pointer-events-none z-10" />
       </div>
